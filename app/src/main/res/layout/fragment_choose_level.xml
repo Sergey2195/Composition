@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundSV"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ChooseLevelFragment">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:text="Выберите уровень" />
+
+    <Button
+        android:id="@+id/testBtn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        android:layout_margin="30dp"
+        android:text="Тестовый" />
+
+    <Button
+        android:id="@+id/easyBtn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testBtn"
+        android:backgroundTint="#04C852"
+        android:layout_margin="30dp"
+        android:text="Легкий" />
+
+    <Button
+        android:id="@+id/medBtn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/easyBtn"
+        android:layout_margin="30dp"
+        android:backgroundTint="#EA7922"
+        android:text="Средний" />
+
+    <Button
+        android:id="@+id/hardBtn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medBtn"
+        android:backgroundTint="#D81A1A"
+        android:layout_margin="30dp"
+        android:text="Тяжелый" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hardBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/choose_level" />
+</androidx.constraintlayout.widget.ConstraintLayout>
