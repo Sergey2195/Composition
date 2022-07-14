@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Composition</string>
     <string name="question" translatable="false">?</string>
-    <string name="progress_answers">Правильных ответов %s (Минимум %s)></string>
+    <string name="progress_answers">Правильных ответов %s (Минимум %s)</string>
 </resources>

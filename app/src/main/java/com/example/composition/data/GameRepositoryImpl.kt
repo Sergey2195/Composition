@@ -13,9 +13,14 @@ object GameRepositoryImpl:GameRepository {
         var sumInQuestion = Random.nextInt(2 until maxSumValue)
         var visibleNum = Random.nextInt(1 until sumInQuestion)
         var trueAnswer = sumInQuestion - visibleNum
+        var range = if (sumInQuestion > 7) {
+            (1..sumInQuestion)
+        } else {
+            (1..9)
+        }
         variables.add(trueAnswer)
         while (variables.count() < countOfOptions){
-            variables.add(Random.nextInt(1..sumInQuestion))
+            variables.add(Random.nextInt(range))
         }
         return Question(sumInQuestion, visibleNum, variables.toList())
     }

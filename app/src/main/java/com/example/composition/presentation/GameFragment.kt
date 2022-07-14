@@ -3,6 +3,7 @@ package com.example.composition.presentation
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +25,12 @@ class GameFragment : Fragment() {
     private lateinit var level: Level
     private val tvOptions by lazy {
         mutableListOf<TextView>().apply {
-            this.add(binding.answer1)
-            this.add(binding.answer2)
-            this.add(binding.answer3)
-            this.add(binding.answer4)
-            this.add(binding.answer5)
-            this.add(binding.answer6)
+            add(binding.answer1)
+            add(binding.answer2)
+            add(binding.answer3)
+            add(binding.answer4)
+            add(binding.answer5)
+            add(binding.answer6)
         }
     }
     private var _binding: FragmentGameBinding? = null
@@ -85,6 +86,9 @@ class GameFragment : Fragment() {
         }
         viewModel.minPercent.observe(viewLifecycleOwner){
             binding.progressBar.secondaryProgress = it
+        }
+        viewModel.progressAnswers.observe(viewLifecycleOwner){
+            binding.tvAnswersProgress.text = it
         }
         viewModel.gameResult.observe(viewLifecycleOwner){
             requireActivity().supportFragmentManager.beginTransaction()

@@ -2,6 +2,7 @@ package com.example.composition.presentation
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -60,6 +61,7 @@ class GameFragmentViewModel(application: Application): AndroidViewModel(applicat
         _minPercent.value = gameSettings.minPercentOfRightAnswers
         startTimer()
         generateQuestion()
+        updateProgress()
     }
 
     fun chooseAnswer(answer: Int){
@@ -89,6 +91,9 @@ class GameFragmentViewModel(application: Application): AndroidViewModel(applicat
     }
 
     private fun calculatePercentOfRightAnswers(): Int{
+        if (countOfQuestions == 0){
+            return 0
+        }
         return ((rightAnswers/ countOfQuestions.toDouble())*100).toInt()
     }
 
