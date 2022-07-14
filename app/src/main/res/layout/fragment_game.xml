@@ -147,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Правильных ответов: (минимум)"
+        android:text="@string/progress_answers"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -157,32 +157,33 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
 
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/teal_200"
         android:gravity="center"
         android:text="@string/question"
-        android:textSize="40dp"
         android:textColor="@color/white"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:textSize="40dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_answers_progress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_visible_num"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sum" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_sum"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/tv_visible_num"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginEnd="5dp"
         android:background="@color/teal_200"
         android:gravity="center"
         android:text="0"
-        android:textSize="40dp"
         android:textColor="@color/white"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_question"
-        app:layout_constraintTop_toTopOf="@+id/tv_question"
+        android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_question"
+        app:layout_constraintEnd_toStartOf="@+id/tv_question"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-         />
+        app:layout_constraintTop_toTopOf="@+id/tv_question"
+        tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
