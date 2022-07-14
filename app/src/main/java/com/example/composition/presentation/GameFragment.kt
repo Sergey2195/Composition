@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.composition.R
 import com.example.composition.data.GameRepositoryImpl
 import com.example.composition.databinding.FragmentGameBinding
@@ -91,10 +92,10 @@ class GameFragment : Fragment() {
             binding.tvAnswersProgress.text = it
         }
         viewModel.gameResult.observe(viewLifecycleOwner){
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, ResultFragment.newInstance(it))
-                .addToBackStack(ResultFragment.NAME)
-                .commit()
+            val args = Bundle().apply {
+                putParcelable(ResultFragment.KEY_RESULT, it)
+            }
+            findNavController().navigate(R.id.action_gameFragment_to_resultFragment, args)
         }
     }
 
@@ -128,7 +129,7 @@ class GameFragment : Fragment() {
     }
 
     companion object {
-        private const val KEY_VALUE = "level"
+        const val KEY_VALUE = "level"
         const val GAME_FRAGMENT = "gameFragment"
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {

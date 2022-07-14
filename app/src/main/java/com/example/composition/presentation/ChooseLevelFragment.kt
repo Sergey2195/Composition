@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.composition.R
 import com.example.composition.databinding.FragmentChooseLevelBinding
 import com.example.composition.domain.entity.Level
@@ -30,29 +31,24 @@ class ChooseLevelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.testBtn.setOnClickListener{
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, GameFragment.newInstance(Level.TEST))
-                .addToBackStack(GameFragment.GAME_FRAGMENT)
-                .commit()
+            setClickListeners(Level.TEST)
         }
         binding.easyBtn.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, GameFragment.newInstance(Level.EASY))
-                .addToBackStack(GameFragment.GAME_FRAGMENT)
-                .commit()
+            setClickListeners(Level.EASY)
         }
         binding.medBtn.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, GameFragment.newInstance(Level.NORMAL))
-                .addToBackStack(GameFragment.GAME_FRAGMENT)
-                .commit()
+            setClickListeners(Level.NORMAL)
         }
         binding.hardBtn.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, GameFragment.newInstance(Level.HARD))
-                .addToBackStack(GameFragment.GAME_FRAGMENT)
-                .commit()
+            setClickListeners(Level.HARD)
         }
+    }
+
+    private fun setClickListeners(level: Level){
+        val args = Bundle().apply {
+            putParcelable(GameFragment.KEY_VALUE, level)
+        }
+        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment, args)
     }
 
     override fun onDestroyView() {
