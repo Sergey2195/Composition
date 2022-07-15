@@ -16,10 +16,6 @@ class ChooseLevelFragment : Fragment() {
     private val binding: FragmentChooseLevelBinding
         get() = _binding ?: throw RuntimeException("ChooseLevelFragment binding == null")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,10 +41,7 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun setClickListeners(level: Level){
-        val args = Bundle().apply {
-            putParcelable(GameFragment.KEY_VALUE, level)
-        }
-        findNavController().navigate(R.id.action_chooseLevelFragment_to_gameFragment, args)
+        findNavController().navigate(ChooseLevelFragmentDirections.actionChooseLevelFragmentToGameFragment(level))
     }
 
     override fun onDestroyView() {

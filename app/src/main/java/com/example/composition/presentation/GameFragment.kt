@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.composition.R
 import com.example.composition.data.GameRepositoryImpl
 import com.example.composition.databinding.FragmentGameBinding
@@ -24,6 +25,8 @@ import com.example.composition.domain.usecases.GetGameSettingsUseCase
 
 class GameFragment : Fragment() {
     private lateinit var level: Level
+
+    private val args by navArgs<GameFragmentArgs>()
     private val tvOptions by lazy {
         mutableListOf<TextView>().apply {
             add(binding.answer1)
@@ -38,19 +41,17 @@ class GameFragment : Fragment() {
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("GameFragment binding == null")
     private val viewModel: GameFragmentViewModel by lazy {
+        level = args.level
         ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[GameFragmentViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         observeLiveData()
         setClickListeners()
         viewModel.startGame(level)
@@ -64,50 +65,12 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun observeLiveData() {
-        viewModel.question.observe(viewLifecycleOwner) {
-            binding.tvSum.text = it.sum.toString()
-            binding.tvVisibleNum.text = it.visibleNumber.toString()
-            for (i in 0 until tvOptions.size) {
-                tvOptions[i].text = it.options[i].toString()
-            }
-        }
-        viewModel.percentOfRightAnswers.observe(viewLifecycleOwner) {
-            binding.progressBar.setProgress(it, true)
-        }
-        viewModel.enoughCountOfRightAnswers.observe(viewLifecycleOwner){
-            binding.tvAnswersProgress.setTextColor(getColorByState(it))
-        }
-        viewModel.enoughPercentOfRightAnswers.observe(viewLifecycleOwner){
-            val color = getColorByState(it)
-            binding.progressBar.progressTintList =  ColorStateList.valueOf(color )
-        }
-        viewModel.formattedTime.observe(viewLifecycleOwner){
-            binding.tvTimer.text = it
-        }
-        viewModel.minPercent.observe(viewLifecycleOwner){
-            binding.progressBar.secondaryProgress = it
-        }
-        viewModel.progressAnswers.observe(viewLifecycleOwner){
-            binding.tvAnswersProgress.text = it
-        }
+    private fun observeLiveData() { 
         viewModel.gameResult.observe(viewLifecycleOwner){
-            val args = Bundle().apply {
-                putParcelable(ResultFragment.KEY_RESULT, it)
-            }
-            findNavController().navigate(R.id.action_gameFragment_to_resultFragment, args)
+            findNavController().navigate(GameFragmentDirections.actionGameFragmentToResultFragment(it))
         }
     }
 
-    private fun getColorByState(state: Boolean): Int{
-        return  ContextCompat.getColor(requireContext(),
-            if (state){
-                android.R.color.holo_green_light
-            }else {
-                android.R.color.holo_red_light
-            }
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -117,26 +80,8 @@ class GameFragment : Fragment() {
         return binding.root
     }
 
-    private fun parseArgs() {
-        requireArguments().getParcelable<Level>(KEY_VALUE)?.let {
-            level = it
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val KEY_VALUE = "level"
-        const val GAME_FRAGMENT = "gameFragment"
-        fun newInstance(level: Level): GameFragment {
-            return GameFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(KEY_VALUE, level)
-                }
-            }
-        }
     }
 }
